@@ -1,6 +1,6 @@
 import { _list } from "@/_mock/_list";
-import TodoList from "@/components/list/todo-list";
 import TodoListAdd from "@/components/list/todo-list-add";
+import TodoListContainer from "@/components/list/todo-list-container";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
       </h1>
       <div className="flex flex-col items-center w-full max-w-2xl gap-4">
         <TodoListAdd />
-        <TodoList items={_list} />
+        <TodoListContainer />
       </div>
     </main>
   );
