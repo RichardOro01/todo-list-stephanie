@@ -13,7 +13,7 @@ const Input: React.FC<
         <span className="font-semibold text-base">{label}</span>
         <input
           className={clsx(
-            "border-2 rounded-md  outline-none px-4 py-2 w-full focus:shadow-lg ",
+            "border-2 rounded-md  outline-none px-4 py-2 w-full focus:shadow-lg transition-all",
             {
               "border-gray-300 focus:shadow-blue-300 focus:border-blue-300":
                 !error,
