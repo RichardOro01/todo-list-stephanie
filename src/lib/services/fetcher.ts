@@ -1,8 +1,8 @@
 import { FetchServerResponse } from "./types";
 
-export const fetcher = async (method: Function) => {
+export const fetcher = async <T = any>(method: Function) => {
   const res = await method();
-  return handleResponse(res);
+  return handleResponse<T>(res);
 };
 
 const handleResponse = <T>(res: FetchServerResponse<T>) => {
