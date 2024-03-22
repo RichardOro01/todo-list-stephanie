@@ -9,29 +9,35 @@ interface TodoListItemProps {
 }
 
 const TodoListItem: React.FC<TodoListItemProps> = ({ item }) => {
-  const { id, description, dueDate, completed } = item;
+  const { id, description, dueDate, status } = item;
   return (
     <li
       className={clsx(
         "flex gap-2 justify-between items-center px-4 py-2 rounded-lg  border-solid border-2",
         {
-          "bg-blue-100": !completed,
-          "border-blue-300": !completed,
-          "bg-green-100": completed,
-          "border-green-300": completed,
+          "bg-blue-100": status === "pending",
+          "border-blue-300": status === "pending",
+          "bg-green-100": status === "compliment",
+          "border-green-300": status === "compliment",
+          "bg-red-100": status === "canceled",
+          "border-red-300": status === "canceled",
         }
       )}
     >
-      <div className="flex flex-col gap-2">
-        <h3 className="text-md font-semibold text-gray-800">{description}</h3>
+      <div className="flex flex-col gap-2 w-full">
+        <h3 className="text-md font-semibold text-gray-800 break-all">
+          {description}
+        </h3>
         <h5 className="text-sm font-semibold text-gray-700">
           {dueDate.toLocaleDateString()}
         </h5>
       </div>
-      <div className="flex gap-2">
-        <TodoListItemTrashButton {...{ id }} />
-        <TodoListItemCheckButton {...{ id }} />
-      </div>
+      {status === "pending" && (
+        <div className="flex gap-2 w-[10%]">
+          <TodoListItemTrashButton {...{ id }} />
+          <TodoListItemCheckButton {...{ id }} />
+        </div>
+      )}
     </li>
   );
 };

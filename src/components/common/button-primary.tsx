@@ -11,7 +11,7 @@ export interface ButtonProps
 const ButtonPrimary: React.FC<ButtonProps> = ({ children, ...props }) => {
   return (
     <button
-      className="bg-blue-500 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-300 active:scale-105 text-white transition-all font-semibold py-2 px-4 rounded"
+      className="flex justify-center bg-blue-500 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-300 active:scale-105 text-white transition-all font-semibold py-2 px-4 rounded"
       {...props}
     >
       {children}

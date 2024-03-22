@@ -7,18 +7,21 @@ import { fetcher } from "@/lib/services/fetcher";
 import { addWish } from "@/lib/services/wishes/methods";
 import { createWishSchema } from "@/lib/services/wishes/shemas";
 import { ZodError } from "zod";
+import Loading from "../common/loading";
 
 interface TodoListAddModalProps {
   onClose: () => void;
 }
 
 const TodoListAddModal: React.FC<TodoListAddModalProps> = ({ onClose }) => {
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<
     { path: string | number; message: string }[]
   >([]);
 
   const handleAdd: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const formData = new FormData(event.currentTarget);
       const data: ICreateWish = {
@@ -37,6 +40,7 @@ const TodoListAddModal: React.FC<TodoListAddModalProps> = ({ onClose }) => {
       }
       console.log(e);
     }
+    setLoading(false);
   };
   return (
     <form onSubmit={handleAdd} className="flex flex-col items-center gap-4">
@@ -68,10 +72,12 @@ const TodoListAddModal: React.FC<TodoListAddModalProps> = ({ onClose }) => {
         />
       </div>
       <div className="grid grid-cols-2 gap-4 w-full mt-4">
-        <ButtonSecondary type="button" onClick={onClose}>
+        <ButtonSecondary type="button" onClick={onClose} disabled={loading}>
           Cancelar
         </ButtonSecondary>
-        <ButtonPrimary type="submit">Agregar</ButtonPrimary>
+        <ButtonPrimary type="submit" disabled={loading}>
+          {loading ? <Loading color="white" /> : "Agregar"}
+        </ButtonPrimary>
       </div>
     </form>
   );

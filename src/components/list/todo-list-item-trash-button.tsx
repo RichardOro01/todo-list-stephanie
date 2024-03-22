@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import trash from "@/assets/icons/trash.svg";
 import { fetcher } from "@/lib/services/fetcher";
-import { checkWish, deleteWish } from "@/lib/services/wishes/methods";
+import { cancelWish } from "@/lib/services/wishes/methods";
+import Loading from "../common/loading";
 
 interface TodoListItemTrashButtonProps {
   id: number;
@@ -13,16 +14,23 @@ interface TodoListItemTrashButtonProps {
 const TodoListItemTrashButton: React.FC<TodoListItemTrashButtonProps> = ({
   id,
 }) => {
-  const handleTrash = () => {
+  const [loading, setLoading] = useState(false);
+  const handleTrash = async () => {
+    setLoading(true);
     try {
-      fetcher(() => deleteWish(id));
+      await fetcher(() => cancelWish(id));
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
   return (
-    <button title="trash" onClick={handleTrash}>
-      <Image src={trash} alt="trash" />
+    <button title="delete" onClick={handleTrash} disabled={loading}>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Image src={trash} alt="trash" width={24} height={24} />
+      )}
     </button>
   );
 };

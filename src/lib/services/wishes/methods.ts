@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { ICreateWish, IWish } from "@/types/list";
+import { ICreateWish, IWish, WishStatus } from "@/types/list";
 import { FetchServerResponse } from "../types";
 import { createWishSchema } from "./shemas";
 import { ZodError } from "zod";
@@ -35,7 +35,9 @@ export const addWish = async (wish: ICreateWish) => {
 
 export const getWishes = async () => {
   try {
-    const wishes = await prisma.wishes.findMany();
+    const wishes = await prisma.wishes.findMany({
+      orderBy: { limit_date: "asc" },
+    });
     return {
       data: wishes,
       status: 200,
@@ -51,10 +53,18 @@ export const getWishes = async () => {
 };
 
 export const checkWish = async (id: number) => {
+  return updateWishStatus(id, "compliment");
+};
+
+export const cancelWish = async (id: number) => {
+  return updateWishStatus(id, "canceled");
+};
+
+export const updateWishStatus = async (id: number, status: WishStatus) => {
   try {
     await prisma.wishes.update({
       where: { id },
-      data: { status: "compliment" },
+      data: { status: status },
     });
     revalidatePath("/");
     return {
