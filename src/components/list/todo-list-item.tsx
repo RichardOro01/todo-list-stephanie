@@ -29,8 +29,8 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ item }) => {
         </h5>
       </div>
       <div className="flex gap-2">
-        <TodoListItemTrashButton />
-        <TodoListItemCheckButton />
+        <TodoListItemTrashButton {...{ id }} />
+        <TodoListItemCheckButton {...{ id }} />
       </div>
     </li>
   );
