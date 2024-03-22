@@ -1,15 +1,16 @@
 import clsx from "clsx";
 import React from "react";
-import { IListItem } from "@/types/list";
+import { IWish } from "@/types/list";
 import TodoListItemCheckButton from "./todo-list-item-check-button";
 import TodoListItemTrashButton from "./todo-list-item-trash-button";
+import TodoListItemEditButton from "./todo-list-item-edit-button";
 
 interface TodoListItemProps {
-  item: IListItem;
+  wish: IWish;
 }
 
-const TodoListItem: React.FC<TodoListItemProps> = ({ item }) => {
-  const { id, description, dueDate, status } = item;
+const TodoListItem: React.FC<TodoListItemProps> = ({ wish }) => {
+  const { id, name, limit_date, status } = wish;
   return (
     <li
       className={clsx(
@@ -26,14 +27,15 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ item }) => {
     >
       <div className="flex flex-col gap-2 w-full">
         <h3 className="text-md font-semibold text-gray-800 break-all">
-          {description}
+          {name}
         </h3>
         <h5 className="text-sm font-semibold text-gray-700">
-          {dueDate.toLocaleDateString()}
+          {limit_date.toLocaleDateString()}
         </h5>
       </div>
       {status === "pending" && (
-        <div className="flex gap-2 w-[10%]">
+        <div className="flex gap-2 w-full max-w-24">
+          <TodoListItemEditButton {...{ wish }} />
           <TodoListItemTrashButton {...{ id }} />
           <TodoListItemCheckButton {...{ id }} />
         </div>

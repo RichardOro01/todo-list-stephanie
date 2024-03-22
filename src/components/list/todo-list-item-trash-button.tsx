@@ -25,7 +25,7 @@ const TodoListItemTrashButton: React.FC<TodoListItemTrashButtonProps> = ({
     setLoading(false);
   };
   return (
-    <button title="delete" onClick={handleTrash} disabled={loading}>
+    <button title="Cancelar" onClick={handleTrash} disabled={loading}>
       {loading ? (
         <Loading />
       ) : (

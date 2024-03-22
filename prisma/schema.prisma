@@ -10,7 +10,7 @@ datasource db {
 model wishes {
   id         Int      @id @default(autoincrement())
   name       String
-  limit_date DateTime @db.Date
+  limit_date DateTime @db.Timestamptz(6)
   status     status
 }
 

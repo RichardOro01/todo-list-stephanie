@@ -25,7 +25,7 @@ const TodoListItemCheckButton: React.FC<TodoListItemCheckButtonProps> = ({
     setLoading(false);
   };
   return (
-    <button title="check" onClick={handleCheck} disabled={loading}>
+    <button title="Cumplir" onClick={handleCheck} disabled={loading}>
       {loading ? (
         <Loading />
       ) : (
