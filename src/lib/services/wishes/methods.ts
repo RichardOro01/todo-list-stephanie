@@ -7,12 +7,13 @@ import { createWishSchema } from "./schemas";
 import { ZodError } from "zod";
 import { revalidatePath } from "next/cache";
 import { internalError, okResponse } from "../utils";
+import { paths } from "@/config";
 
 export const addWish = async (wish: ICreateWish) => {
   try {
     createWishSchema.parse(wish);
     await prisma.wishes.create({ data: wish });
-    revalidatePath("/");
+    revalidatePath(paths.app);
     return okResponse;
   } catch (error: any) {
     if (error instanceof ZodError) {
@@ -30,7 +31,7 @@ export const editWish = async (wish: IWish) => {
   try {
     createWishSchema.parse(wish);
     await prisma.wishes.update({ where: { id: wish.id }, data: wish });
-    revalidatePath("/");
+    revalidatePath(paths.app);
     return okResponse;
   } catch (error: any) {
     if (error instanceof ZodError) {
@@ -73,7 +74,7 @@ export const updateWishStatus = async (id: number, status: WishStatus) => {
       where: { id },
       data: { status: status },
     });
-    revalidatePath("/");
+    revalidatePath(paths.app);
     return okResponse;
   } catch (error: any) {
     return internalError(error.message);
@@ -85,7 +86,7 @@ export const deleteWish = async (id: number) => {
     await prisma.wishes.delete({
       where: { id },
     });
-    revalidatePath("/");
+    revalidatePath(paths.app);
     return okResponse;
   } catch (error: any) {
     return internalError(error.message);
