@@ -26,9 +26,9 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ wish }) => {
       )}
     >
       <div className="flex flex-col gap-2 w-full">
-        <h3 className="text-md font-semibold text-gray-800 break-all">
+        <h4 className="text-md font-semibold text-gray-800 break-all">
           {name}
-        </h3>
+        </h4>
         <h5 className="text-sm font-semibold text-gray-700">
           {limit_date.toLocaleDateString()}
         </h5>
